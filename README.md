@@ -76,28 +76,3 @@ Como el sitio no expone una cuenta de prueba fija y pública, el test crea una c
 - Error al loguearse con un email no registrado.
 
 En ambos casos se verifica el mensaje "Your email or password is incorrect!".
-
-## Parte 2 — Pruebas de API
-
-Se eligieron `GET /v1/qa/test1` y `GET /v1/qa/test2`.
-
-### `test1` — camino feliz
-
-- Verifica status `200`.
-- Verifica `content-type: application/json`.
-- Verifica que el body tenga `{ ok: true, date: <ISO 8601> }`.
-- Verifica que `date` sea una fecha válida y cercana al momento actual (dentro de 5 minutos).
-- Verifica que el tiempo de respuesta esté por debajo de 2000 ms.
-- Test adicional: dos llamadas consecutivas devuelven timestamps distintos (no está cacheado/estático).
-
-### `test2` — bug conocido
-
-Al momento de escribir esta suite, este endpoint devuelve **500 Internal Server Error** en vez de una respuesta exitosa (bug documentado por separado en `bug_report_test2.docx`, generado a partir de la plantilla `bugreport.md` del equipo).
-
-El test está escrito para **documentar el comportamiento actual** (falla con 500) en vez de fallar el suite completo — es un test de regresión: el día que el bug se arregle, este test empezará a fallar, lo cual es la señal para reemplazarlo por las mismas validaciones que se le hacen a `test1`.
-
-## Notas y limitaciones conocidas
-
-- Los selectores de UI usan los atributos `data-qa` que expone automationexercise.com específicamente para automatización; si el sitio cambia su markup, estos selectores tendrían que revisarse.
-- El ambiente donde se armó este proyecto no tenía salida a internet, por lo que las pruebas se escribieron y se validó su sintaxis, pero no se ejecutaron end-to-end contra los sitios reales. Se recomienda correr `npm run cypress:open` localmente antes de dar la suite por definitiva, para confirmar que los selectores siguen vigentes.
-- El umbral de tiempo de respuesta (2000 ms) es arbitrario, pensado como un límite razonable para un endpoint de prueba tipo "echo"; se puede ajustar según el SLA real que se quiera validar.
