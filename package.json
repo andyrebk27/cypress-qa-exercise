@@ -1,0 +1,15 @@
+{
+  "name": "automation-exercise-cypress",
+  "version": "1.0.0",
+  "description": "Cypress UI tests for automationexercise.com and API tests for echo-serv.tbxnet.com QA endpoints",
+  "private": true,
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:ui": "cypress run --spec \"cypress/e2e/ui/**/*.cy.js\"",
+    "test:api": "cypress run --spec \"cypress/e2e/api/**/*.cy.js\""
+  },
+  "devDependencies": {
+    "cypress": "^13.15.0"
+  }
+}
